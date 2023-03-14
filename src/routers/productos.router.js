@@ -1,16 +1,16 @@
 import { Router }  from 'express'
 import seedProducts from '../controllers/productsController.js'
-
+import productModel from '../models/product.models.js'
 
 
 const router = Router()
 //mostrar todos los productos
 // 1. GET OK
 router.get('/' ,async (req ,res )=>{
-  //res.send({status:"success"})
-  //res.status(400).send({status:"error",error:"Ocurrio un error"})
-//   const product = await db.find().lean().exec()
-  res.render('productos',{ product:1 })
+    // res.send('Lista de productos...')
+    const productos = await productModel.find().lean().exec()
+    console.log(productos)
+    res.render('productos', { productos })
 })
 
 // SeedProducts
@@ -24,6 +24,9 @@ router.get('/seedProducts' ,async (req ,res )=>{
 // api/products?id=1 => query
 // 2. Get by ID
 router.get('/:id' , (req ,res )=>{
+
+
+
     const {id} = req.query
     //recorro el Products.json -metodo find : id
    

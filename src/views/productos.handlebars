@@ -1,0 +1,22 @@
+
+<div>
+    {{#each productos}}
+    <div>
+        <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">{{this.title}}</th>
+        <th scope="col">{{this.type}}</th>
+        <th scope="col">{{this.price}}</th>
+        <th scope="col">{{this.thumbnail}}</th>
+        <button type="button" class="btn btn-primary">Detalles</button>
+      </tr>
+    </thead>
+    <tbody id="productosContenedor">
+
+    </tbody>
+  </table>
+    </div>
+    {{/each}}
+    
+</div>

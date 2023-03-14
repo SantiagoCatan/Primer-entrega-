@@ -1,11 +1,9 @@
 import mongoose from 'mongoose'
+import productModel from '../models/product.models.js'
 
 
 async function seedProducts(){
     
-
-
-
     const seedProducts = [  
         {title: 'Iphones',type:'iphone 11',price : 450,thumbnail : 'https://http2.mlstatic.com/D_NQ_NP_656548-MLA46114829749_052021-O.jpg', code: 'item1',capacity:20},
         {title:"Iphones",type:'iphone 12',price : 850,thumbnail : 'https://m.media-amazon.com/images/I/41xssMLI2DL._AC_.jpg', code: "item2",capacity:20}, 
@@ -21,19 +19,8 @@ async function seedProducts(){
         {title:"Watch",type:'Watch Serie8', price :100, thumbnail :'https://http2.mlstatic.com/D_NQ_NP_858093-MLA48096508611_112021-O.webp',code:"item12",capacity:20},
         {title:"Watch",type:'Watch nike', price :500, thumbnail :'https://tecnoselect.com/pub/media/catalog/product/cache/33323691697b683682a920cb116273e9/m/i/mght-pure-platinum-black-nike-45mm.jpg',code:"item13",capacity:40 },
         ]
-        
-        const productsSchema =new mongoose.Schema({
-            title:{type:String,require:true},
-            type:{type:String,require:true},
-            price :{type:Number,require:true},
-            thumbnail :{type:String,require:true},
-            code: {type:String,require:true},
-            capacity: {type:Number,require:true}
-        })
-        
-        const productSchema = mongoose.model('Productos',productsSchema)        
-        
-        await productSchema.insertMany(seedProducts)
+    
+        await productModel.insertMany(seedProducts)
         console.log("Productos insertados")
 
 }
