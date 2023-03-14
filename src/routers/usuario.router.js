@@ -1,5 +1,6 @@
 import { Router }  from 'express'
 import usuarioModel from '../models/usuarios.models.js'
+
 const router = Router()
 
 
