@@ -32,7 +32,7 @@ static cart = []
         
 
         //Validad(obligatorio)
-        if (!pids || cart.length === 0) {
+        if (!pids || pids.length === 0) {
             
             console.error("faltan parametros")
             return  400;

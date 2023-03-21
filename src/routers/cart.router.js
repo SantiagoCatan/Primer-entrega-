@@ -12,8 +12,10 @@ const cartRouter = Router();
  // RUTA CARRITO
 cartRouter.post("/", async (req, res) => {
     let base = {  carrito: [] };
-    await cartController.save(base).populate('_id');
-    res.send({ Msj: "Carrito Guardado" });
+
+    let cart = await cartController.createCart(base)
+
+    res.send({ Msj: "Carrito Guardado" , id: cart});
   });
   
   cartRouter.delete("/:id", async (req, res) => {
