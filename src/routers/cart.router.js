@@ -7,15 +7,15 @@ import mongoose from 'mongoose';
 
 
 
-const cartRouter = Router();
+  const cartRouter = Router();
 
- // RUTA CARRITO
-cartRouter.post("/", async (req, res) => {
-    let base = {  carrito: [] };
+ // CREA CARRITO EN MONGODB
+  cartRouter.post("/", async (req, res) => {
+    let products = req.body.pids
 
-    let cart = await cartController.createCart(base)
+    const {_id}= await cartController.createCart({pids:products})
 
-    res.send({ Msj: "Carrito Guardado" , id: cart});
+    res.send({ Msj: "Carrito Guardado" , id: _id});
   });
   
   cartRouter.delete("/:id", async (req, res) => {
@@ -35,20 +35,29 @@ cartRouter.post("/", async (req, res) => {
     }
   });
   
-  cartRouter.post("/:id/productos/:id_prod", async (req, res) => {
+  cartRouter.put("/:id/productos/:id_prod", async (req, res) => {
+    
     const { id, id_prod } = req.params;
-    const producto = await productsController.getById(id_prod);
-    const carritos = await cartController.getAll();
-    const carrito = await cartController.getById(id);
-    if (id > carritos.length) {
-      res.json({ error: "No existe el carrito" });
-    } else {
-      const carritoActualizado = [...carrito.productos, producto];
-  
-      cartController.updateById(carrito.id, carrito.timestamp, carritoActualizado);
-      res.json({ msg: "Producto agregado" });
+
+    // 1. Buscar carrito por id en mongo, sino esta, retornar 404 (no existe carrito con id )
+    
+    const cart = await cartController.getCart(id)
+    // 2. buscar los id_productos en el carrito, sino estan lo agrego
+      let productos = cart.productos || []
+
+      if (productos && productos.length > 0){
+        let productoFinded = productos.find(id => id === id_prod);
+        if(!productoFinded) productos.push(id_prod)
+      }else{
+        productos.push(id_prod)
+      }
+      cart.productos = productos
+     
+     const result = await cartController.updateCart(cart)
+      
+      res.json({ msg: "Producto agregado" , cart:result});
     }
-  });
+  );
   
   cartRouter.delete("/:id/productos/:id_prod", async (req, res) => {
     let { id, id_prod } = req.params;

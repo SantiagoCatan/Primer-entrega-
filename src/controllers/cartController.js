@@ -19,7 +19,7 @@ static cart = []
 
     }
     //funcion para generar el array y pushearlo dentro del mismo
-   static createCart = async (cid,pids) => {
+   static createCart = async ({cid,pids}) => {
         let cart = {
             products:pids
         };
@@ -42,7 +42,9 @@ static cart = []
     }
 
     static saveCart = async(cart) =>{
-        await db.save(cart)
+        const cartGenerated = new db(cart)
+        return await cartGenerated.save()
+     
     }
 
     static deleteCart = async(db,id) => {
@@ -60,6 +62,19 @@ static cart = []
 
         return 200;
     }
+
+
+    
+    static getCart = async (id)=>{
+        return await db.findById(id);
+    }
+
+
+    static updateCart = async (cart)=>{
+        return await db.updateOne({ _id: cart._id}, {products:cart.products})
+
+    }
+
 }
 export default cartController
 
