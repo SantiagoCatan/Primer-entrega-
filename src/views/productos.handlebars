@@ -9,7 +9,7 @@
         <th scope="col">{{this.type}}</th>
         <th scope="col">{{this.price}}</th>
         <th scope="col">{{this.thumbnail}}</th>
-        <button type="button" class="btn btn-primary">Detalles</button>
+        <button type="button" class="btn btn-primary">Comprar</button>
       </tr>
     </thead>
     <tbody id="productosContenedor">
@@ -20,7 +20,6 @@
     {{/each}}
     <div>
       {{#if hasPrevPage}}
-
           <a href="{{PreviLink}}">Anterior</a>
       {{/if}}
     {{#if hasNextPage}}

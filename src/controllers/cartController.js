@@ -40,9 +40,6 @@ static cart = []
         let productsFinded = products.find((p)=> p.id === pid)
         if (products.length === 0 || productsFinded === undefined)
             products.push({pid})
-        
-        
-        
         cart.push({
             cid,
             products
