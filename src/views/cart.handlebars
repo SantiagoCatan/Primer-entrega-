@@ -1,4 +1,3 @@
-
 <div>
     {{#each productos}}
     <div>
@@ -9,7 +8,7 @@
         <th scope="col">{{this.type}}</th>
         <th scope="col">{{this.price}}</th>
         <th scope="col">{{this.thumbnail}}</th>
-        <button type="button" class="btn btn-primary">Detalles</button>
+        <button type="button" class="btn btn-primary">comprar</button>
       </tr>
     </thead>
     <tbody id="productosContenedor">
@@ -18,14 +17,5 @@
   </table>
     </div>
     {{/each}}
-    <div>
-      {{#if hasPrevPage}}
-
-          <a href="{{PreviLink}}">Anterior</a>
-      {{/if}}
-    {{#if hasNextPage}}
-    <a href="{{NextLink}}">Siguiente</a>
-    {{/if}}
-    </div>
     
 </div>

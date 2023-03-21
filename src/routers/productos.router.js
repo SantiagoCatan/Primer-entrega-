@@ -8,8 +8,13 @@ const router = Router()
 // 1. GET OK
 router.get('/' ,async (req ,res )=>{
     // res.send('Lista de productos...')
-    const productos = await productModel.find().lean().exec()
-    console.log(productos)
+    let page = parseInt (req.query.page)
+    if (!page) page = 1
+    const productos = await productModel.paginate( {} , {page ,limite:10 , lean: true})
+
+    result.prevLink = result.hasPrevPage ? `/product?page=${result.PrevPage}` : ''
+    result.nextLink = result.hasNextPage ? `/product?page=${result.NextPage}` : ''
+
     res.render('productos', { productos })
 })
 
@@ -24,12 +29,20 @@ router.get('/seedProducts' ,async (req ,res )=>{
 // api/products?id=1 => query
 // 2. Get by ID
 router.get('/:id' , (req ,res )=>{
-
-
-
     const {id} = req.query
     //recorro el Products.json -metodo find : id
    
+})
+
+
+//fitro de tipos de modelos
+router.get('/:type' ,async (req ,res )=>{
+    const {type} = req.query
+   const filter = await productModel.aggregate([
+        {$match:{ type: {type}}
+    }
+   ])
+    
 })
 
 //Poder agregar mas productos
