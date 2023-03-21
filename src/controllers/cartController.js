@@ -3,7 +3,7 @@ import mongoose from "mongoose"
 
 
 
-class CartService {
+class cartController {
     constructor() {}
 static cart = []
     //funcion para genera el enerador
@@ -40,6 +40,7 @@ static cart = []
         let productsFinded = products.find((p)=> p.id === pid)
         if (products.length === 0 || productsFinded === undefined)
             products.push({pid})
+
         cart.push({
             cid,
             products
@@ -70,6 +71,5 @@ static cart = []
         return 200;
     }
 }
-
-module.exports = CartService
+export default cartController
 

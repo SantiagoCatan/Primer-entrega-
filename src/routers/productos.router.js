@@ -10,11 +10,13 @@ router.get('/' ,async (req ,res )=>{
     // res.send('Lista de productos...')
     let page = parseInt (req.query.page)
     if (!page) page = 1
+    
+
     const productos = await productModel.paginate( {} , {page ,limite:10 , lean: true})
 
-    result.prevLink = result.hasPrevPage ? `/product?page=${result.PrevPage}` : ''
-    result.nextLink = result.hasNextPage ? `/product?page=${result.NextPage}` : ''
-
+    productos.prevLink = productos.hasPrevPage ? `/productos?page=${productos.prevPage}` : ''
+    productos.nextLink = productos.hasNextPage ? `/productos?page=${productos.nextPage}` : ''
+    console.log(productos)
     res.render('productos', { productos })
 })
 

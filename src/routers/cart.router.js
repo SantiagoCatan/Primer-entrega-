@@ -1,32 +1,32 @@
 //modularizacion por router
 import { Router }  from 'express'
-import cartService from '../controllers/cartController'
-import Products from '../controllers/productsController';
-import cartModel from '../models/cart.mondels'
+import cartController from '../controllers/cartController.js'
+import productsController from '../controllers/productsController.js';
+import cartModel from '../models/cart.mondels.js'
 import mongoose from 'mongoose';
+
 
 
 const cartRouter = Router();
 
  // RUTA CARRITO
 cartRouter.post("/", async (req, res) => {
-    let base = {  productos: [] };
-    await cartService.find(base).populate('_id');
+    let base = {  carrito: [] };
+    await cartController.save(base).populate('_id');
     res.send({ Msj: "Carrito Guardado" });
   });
   
   cartRouter.delete("/:id", async (req, res) => {
     //REVISAR DELETE EN mongoose
-    const { id } = req.params;
-    res.json(await cartService.deleteCart(id));
+    const { id } = req.params._id;
+    const dele = await cartModel.findOne({ _id:id}).lean().exec() 
     res.send({ Msj: "Carrito Borrado" });
   });
   
   cartRouter.get("/:id/productos", async (req, res) => {
     const { id } = req.params;
-    let cart = await cartService.getById(id);
-    console.log(cart.productos);
-    if (cart.productos == undefined) {
+    let cart = await cartModel.findOne({ _id:id}).lean().exec() ;
+    if (cart == undefined) {
       res.json({ msg: "No hay productos" });
     } else {
       res.json({ id: cart.id, productos: cart.productos });
@@ -35,33 +35,33 @@ cartRouter.post("/", async (req, res) => {
   
   cartRouter.post("/:id/productos/:id_prod", async (req, res) => {
     const { id, id_prod } = req.params;
-    const producto = await Products.getById(id_prod);
-    const carritos = await cartService.getAll();
-    const carrito = await cartService.getById(id);
+    const producto = await productsController.getById(id_prod);
+    const carritos = await cartController.getAll();
+    const carrito = await cartController.getById(id);
     if (id > carritos.length) {
       res.json({ error: "No existe el carrito" });
     } else {
       const carritoActualizado = [...carrito.productos, producto];
   
-      cartService.updateById(carrito.id, carrito.timestamp, carritoActualizado);
+      cartController.updateById(carrito.id, carrito.timestamp, carritoActualizado);
       res.json({ msg: "Producto agregado" });
     }
   });
   
   cartRouter.delete("/:id/productos/:id_prod", async (req, res) => {
     let { id, id_prod } = req.params;
-    const carritos = await cartService.getAll();
-    const carrito = await cartService.getById(id);
+    const carritos = await cartController.getAll();
+    const carrito = await cartController.getById(id);
     if (id > carritos.length) {
       res.json({ error: "No existe el carrito" });
     } else {
       const listaActualizada = carrito.productos.filter(
         (element) => element.id != id_prod
       );
-      cartService.updateById(carrito.id,  listaActualizada);
+      cartController.updateById(carrito.id,  listaActualizada);
       res.json({ msg: "Producto eliminado" });
     }
   });
   
 
-module.exports = cartRouter ;
+export default  cartRouter ;

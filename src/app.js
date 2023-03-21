@@ -3,7 +3,7 @@ import hbs from 'express-handlebars'
 import mongoose from 'mongoose'
 import usuarioRouter from './routers/usuario.router.js'
 import productosRouter from './routers/productos.router.js'
-import cartHandler from './routers/cart.router.js'
+import cartRouter from './routers/cart.router.js'
 import __dirname from './utils.js'
 
 
@@ -27,7 +27,7 @@ app.use(express.static(__dirname +'/public'))
 
 app.use ('/usuarios', usuarioRouter)
 app.use ('/productos', productosRouter)
-app.use ('/carts', cartHandler)
+app.use ('/carts', cartRouter)
 
 
 const uri = 'mongodb+srv://sannnty50:Mika14561@tiendaiphone.cpcjnks.mongodb.net/usuarios?retryWrites=true&w=majority'
