@@ -17,7 +17,10 @@ router.get('/' ,async (req ,res )=>{
     productos.prevLink = productos.hasPrevPage ? `/productos?page=${productos.prevPage}` : ''
     productos.nextLink = productos.hasNextPage ? `/productos?page=${productos.nextPage}` : ''
     console.log(productos)
-    res.render('productos', { productos })
+    res.render('productos', { 
+        productos ,
+        style:'index.css'
+    })
 })
 
 // SeedProducts

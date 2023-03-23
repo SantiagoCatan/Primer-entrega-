@@ -3,23 +3,24 @@
     {{#each productos.docs}}
     <div>
         <table class="table">
+          
+    <tbody id="productosContenedor">
+
     <thead>
       <tr>
-        <th scope="col">{{this.title}}</th>
+        <th scope="col"><p>{{this.title}}</p></th>
         <th scope="col">{{this.type}}</th>
         <th scope="col">{{this.price}}</th>
         <th scope="col">{{this.thumbnail}}</th>
         <button type="button" class="btn btn-primary">Agregar</button>
       </tr>
     </thead>
-    <tbody id="productosContenedor">
-
     </tbody>
   </table>
     </div>
     {{/each}}
   
-    <div>
+    <div class="botonPage">
       {{#if productos.hasPrevPage}}
           <a href="{{productos.prevLink}}">Anterior</a>
       {{/if}}
