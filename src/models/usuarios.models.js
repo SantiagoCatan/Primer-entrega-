@@ -1,12 +1,16 @@
 import mongoose from "mongoose"
 
-const  usuarioscolleccion = "usuarios"
+const  usuarioscolleccion = "users"
 
 const usuarioSchema = new mongoose.Schema({
-    id: Number,
-    name: String,
-    type: String,
+    name: { type:String},
+    last_name: { type:String},
+    email: { type:String},
+    age: Number,
+    password: { type:String},
 })
+mongoose.set("strictQuery",false)//obligatorio , si no tirrar undefind
+
 
 const usuarioModel = mongoose.model (usuarioscolleccion, usuarioSchema)
 

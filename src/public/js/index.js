@@ -1,4 +1,6 @@
 
+//add productos - add carrito
+
 document.querySelector("btn btn-primary" ).addEventListener('click',()=>{
 
     
