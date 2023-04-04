@@ -9,6 +9,8 @@ import session from 'express-session'
 import cookieParser  from 'cookie-parser'
 import __dirname from './utils.js'
 import MongoStore from 'connect-mongo'
+import passport from 'passport'
+import initializePassport from './config/passport.config.js'
 
 const app = express()
 const uri = 'mongodb+srv://sannnty50:Mika14561@tiendaiphone.cpcjnks.mongodb.net/?retryWrites=true&w=majority'
@@ -43,6 +45,11 @@ app.use(session({
 
 }))
 
+//inicializacion de password
+initializePassport()
+app.use(passport.initialize())
+app.use(passport.session())
+
 //rutas
 app.use ('/usuarios', usuarioRouter)
 app.use ('/productos', productosRouter)
@@ -67,6 +74,5 @@ mongoose.connect(uri, error => {
     const server = app.listen(8080, () => console.log('Server Up!'))
      server.on('error', e => console.log(e))
  })
-
 
 
